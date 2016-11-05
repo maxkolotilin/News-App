@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Sort news by word"
+        android:onClick="sortNews"
+        />
+
+    <group >
+        <item android:id="@+id/sortByTitle"
+            android:title="Sort by Title"
+            android:onClick="sortInDb"
+            />
+        <item android:id="@+id/sortByDateAsc"
+            android:title="Sort by Date asc"
+            android:onClick="sortInDb"
+            />
+        <item
+            android:id="@+id/sortByDateDesc"
+            android:title="Sort by Date desc"
+            android:onClick="sortInDb"
+            />
+        <item android:id="@+id/getAllFeed"
+            android:title="Get all news"
+            android:onClick="getAllFeed"/>
+    </group>
+</menu>
