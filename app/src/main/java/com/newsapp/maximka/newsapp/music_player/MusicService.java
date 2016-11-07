@@ -41,6 +41,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     public interface OnStateChangedListener {
         void onSelectTrack(int newTrackPosition);
+
         void onPlayingStateChanged(boolean isPlaying);
     }
 
@@ -90,6 +91,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private int selectedTrack = 0;
     private boolean isPrepared = false;
     private boolean isFirstPreparing = true;
+    private boolean isAfterCreating = true;
+    private boolean isAtPreparing = false;
 
     public void setStateChangedListener(OnStateChangedListener listener) {
         stateChangeListener = listener;
@@ -144,11 +147,15 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     @Override
     public void onPrepared(MediaPlayer mp) {
         isPrepared = true;
-        if (isFirstPreparing) {
-            isFirstPreparing = false;
+        isAtPreparing = false;
+        if (isAfterCreating) {
+            isAfterCreating = false;
             restorePlayPosition();
-        } else  {
-            mp.start();
+        }
+        mp.start();
+        if (!isFirstPreparing) {
+            isFirstPreparing = false;
+            mp.pause();
         }
 
         refreshControllerWidget();
@@ -255,27 +262,33 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     public void play(int position) {
-        if (position < 0 || position > tracks.size()) {
-            throw new IndexOutOfBoundsException();
+        if (!isAtPreparing) {
+            if (position < 0 || position > tracks.size()) {
+                throw new IndexOutOfBoundsException();
+            }
+            setSelectedTrack(position);
+            prepareToPlay();
         }
-        setSelectedTrack(position);
-        prepareToPlay();
     }
 
     public void playPrevious() {
-        if (--selectedTrack < 0) {
-            selectedTrack = tracks.size() - 1;
+        if (!isAtPreparing) {
+            if (--selectedTrack < 0) {
+                selectedTrack = tracks.size() - 1;
+            }
+            notifySelectionChanged();
+            prepareToPlay();
         }
-        notifySelectionChanged();
-        prepareToPlay();
     }
 
     public void playNext() {
-        if (++selectedTrack >= tracks.size()) {
-            selectedTrack = 0;
+        if (!isAtPreparing) {
+            if (++selectedTrack >= tracks.size()) {
+                selectedTrack = 0;
+            }
+            notifySelectionChanged();
+            prepareToPlay();
         }
-        notifySelectionChanged();
-        prepareToPlay();
     }
 
 
@@ -313,6 +326,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         player.reset();
         initPlayer();
         if (setSource()) {
+            isAtPreparing = true;
             player.prepareAsync();
             NewsApp.preferences.saveSelectedTrack(selectedTrack);
         }
