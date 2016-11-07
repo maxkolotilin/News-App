@@ -23,9 +23,7 @@ public class DatabaseHelper extends DaoMaster.DevOpenHelper {
 
         List<NewsCategory> categories = new ArrayList<NewsCategory>() {{
             add(new NewsCategory("Главные новости недели", "http://news.tut.by/rss/index.rss", false));
-            add(new NewsCategory("Политика", "http://news.tut.by/rss/politics.rss", false));
-            add(new NewsCategory("Выборы", "http://news.tut.by/rss/elections.rss", false));
-            add(new NewsCategory("Экономика и бизнес", "http://news.tut.by/rss/economics.rss", false));
+            add(new NewsCategory("Деньги и власть", "http://news.tut.by/rss/economics.rss", false));
             add(new NewsCategory("Общество", "http://news.tut.by/rss/society.rss", false));
             add(new NewsCategory("В мире", "http://news.tut.by/rss/world.rss", false));
             add(new NewsCategory("Кругозор", "http://news.tut.by/rss/culture.rss", false));
@@ -34,12 +32,8 @@ public class DatabaseHelper extends DaoMaster.DevOpenHelper {
             add(new NewsCategory("Недвижимость", "http://news.tut.by/rss/realty.rss", false));
             add(new NewsCategory("Авто", "http://news.tut.by/rss/auto.rss", false));
             add(new NewsCategory("Спорт", "http://news.tut.by/rss/sport.rss", false));
-            add(new NewsCategory("ДТП", "http://news.tut.by/rss/dtp.rss", false));
             add(new NewsCategory("Леди", "http://news.tut.by/rss/lady.rss", false));
             add(new NewsCategory("42", "http://news.tut.by/rss/it.rss", false));
-            add(new NewsCategory("Калейдоскоп", "http://news.tut.by/rss/kaleidoscope.rss", false));
-            add(new NewsCategory("ОтКлик", "http://news.tut.by/rss/otklik.rss", false));
-            add(new NewsCategory("Отдых", "http://news.tut.by/rss/summer.rss", false));
             add(new NewsCategory("Афиша", "http://news.tut.by/rss/afisha.rss", false));
             add(new NewsCategory("Новости компаний", "http://news.tut.by/rss/press.rss", false));
         }};
