@@ -124,7 +124,7 @@ public class Track {
     }
 
     private void parseRawTitle() {
-        String target = rawTitle.replace('_', ' ');
+        String target = rawTitle.replace('_', ' ').replaceAll("\\(.*?\\)", "").trim();
         String[] artistAndTitle = target.split(" - ");
         if (artistAndTitle.length == 1) {
             title = artistAndTitle[0];

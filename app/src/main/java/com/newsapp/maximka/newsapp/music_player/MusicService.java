@@ -28,6 +28,8 @@ import com.squareup.seismic.ShakeDetector;
 
 import java.util.List;
 
+import teaspoon.annotations.OnUi;
+
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
     public final static String SELECTED_TAB = "selected_tab";
@@ -324,18 +326,21 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         seek(position);
     }
 
+    @OnUi
     private void refreshControllerWidget() {
         if (musicController != null) {
             musicController.show();
         }
     }
 
+    @OnUi
     private void notifySelectionChanged() {
         if (stateChangeListener != null) {
             stateChangeListener.onSelectTrack(selectedTrack);
         }
     }
 
+    @OnUi
     private void notifyPlayingStateChanged() {
         if (stateChangeListener != null) {
             stateChangeListener.onPlayingStateChanged(isPlaying());
