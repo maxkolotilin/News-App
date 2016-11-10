@@ -153,7 +153,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             restorePlayPosition();
         }
         mp.start();
-        if (!isFirstPreparing) {
+        if (isFirstPreparing) {
             isFirstPreparing = false;
             mp.pause();
         }
